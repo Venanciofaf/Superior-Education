@@ -201,7 +201,7 @@ def load_large_database():
 
 @st.cache_data
 def dict_ies():
-    df_atualizado = pd.read_csv('dados3/MICRODADOS_ED_SUP_IES_2023.csv', encoding='ISO-8859-1', sep=';')
+    df_atualizado = pd.read_csv('dados3/MICRODADOS_ED_SUP_IES_2023.CSV', encoding='ISO-8859-1', sep=';')
     nomes_faculdades = df_atualizado.drop_duplicates(subset='NO_IES')
     final_dict = nomes_faculdades.set_index('CO_IES')['NO_IES'].to_dict()
     faculdades_dict = {k: v for k, v in sorted(final_dict.items(), key=lambda item: item[0])}
