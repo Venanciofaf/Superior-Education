@@ -2,7 +2,6 @@ matplotlib
 pandas
 numpy
 streamlit
-os
 glob
 requests
 gdown
