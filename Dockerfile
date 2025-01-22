@@ -8,7 +8,8 @@ WORKDIR /code
 COPY ./requirements.txt /code/requirements.txt
 
 # Instala as dependências listadas no arquivo requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt || cat /code/requirements.txt
+
 
 # Copia todo o conteúdo da sua aplicação para o diretório de trabalho no container
 COPY . /code
