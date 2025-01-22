@@ -1,6 +1,5 @@
-matplotlib
-pandas
-numpy
-streamlit
-requests
-gdown
+streamlit==1.41.1
+pandas==2.2.3
+numpy==2.2.1
+matplotlib==3.10.0
+gdown==4.7.1
