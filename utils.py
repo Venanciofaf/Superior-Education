@@ -140,68 +140,38 @@ def barPlot(series1 , series2 , título , titulo_eixoX , titulo_EixoY , width=8 
     ax.tick_params(axis="y", labelsize=8)  # Reduz o tamanho dos ticks no eixo Y
     return fig
 
-def clear_csv_files(folder_path):
-    """
-    Apaga todos os arquivos CSV em uma pasta específica.
 
-    :param folder_path: Caminho para a pasta onde os arquivos CSV serão apagados.
-    """
-    # Localizar todos os arquivos CSV na pasta
-    csv_files = glob.glob(os.path.join(folder_path, "*.csv"))
-    
-    # Apagar cada arquivo encontrado
-    for file in csv_files:
-        try:
-            os.remove(file)
-            print(f"Arquivo removido: {file}")
-        except Exception as e:
-            print(f"Erro ao remover {file}: {e}")
-
-def read_csv_from_google_drive(file_id, output_file="temp.csv"):
-    """
-    Baixa um arquivo CSV do Google Drive usando gdown e retorna um DataFrame.
-
-    :param file_id: ID do arquivo no Google Drive.
-    :param output_file: Nome do arquivo temporário para salvar o CSV.
-    :return: DataFrame com os dados do arquivo CSV.
-    """
-    # Construir o URL de download do Google Drive
-    url = f"https://drive.google.com/uc?id={file_id}&export=download"
-    
-    # Fazer o download do arquivo
-    gdown.download(url, output_file, quiet=False)
-    
-    # Ler o arquivo CSV e retornar como DataFrame
-    df = pd.read_csv(output_file)
-    return df
 
 @st.cache_data
 def load_large_database():
-    path = 'dados2'
 
-    ids = ['1zerQCYbiJp7JbnZYfNWA6OMlGmaTraIt',
-       '1xv6GP7iam84WcXpUGesjCdpdNHdkJEb5',
-       '1wtRNOU7cNmgQzGomeb1iK3Sy-Q17ZE10',
-       '1Ccb1ptFODCiSqr5nGGDIKVvD0xldMJ6Y'
-       ]
-
-    outputs = ['dados2/CursosDB.csv',
-           'dados2/EBMATRICULAS.csv',
-           'dados2/EBMATRICULAS20-23.csv',
-           'dados2/MICRODADOS_ED_SUP_IES_2023.CSV']
+    #ids = ['1zerQCYbiJp7JbnZYfNWA6OMlGmaTraIt',
+    #   '1xv6GP7iam84WcXpUGesjCdpdNHdkJEb5',
+    #   '1wtRNOU7cNmgQzGomeb1iK3Sy-Q17ZE10',
+    #   '1Ccb1ptFODCiSqr5nGGDIKVvD0xldMJ6Y'
+    #   ]
+#
+#    outputs = ['dados2/CursosDB.csv',
+#           'dados2/EBMATRICULAS.csv',
+#           'dados2/EBMATRICULAS20-23.csv',
+#           'dados2/MICRODADOS_ED_SUP_IES_2023.CSV']
     
 
-    clear_csv_files(path)
+#    clear_csv_files(path)
 
     # Substitua pelo seu método de carregamento de dados2
-    df1= read_csv_from_google_drive(ids[0] , outputs[0])
-    df2 = read_csv_from_google_drive(ids[1] , outputs[1])
-    df3 = read_csv_from_google_drive(ids[2] , outputs[2])
+#    df1= read_csv_from_google_drive(ids[0] , outputs[0])
+#    df2 = read_csv_from_google_drive(ids[1] , outputs[1])
+#    df3 = read_csv_from_google_drive(ids[2] , outputs[2])
+    df1 = pd.read_csv('https://www.dropbox.com/scl/fi/w64mcaydd44kk6hnqj7x6/CursosDB.csv?rlkey=vq9d8zrngfumqmy0rlibzrpc8&st=i53ugbp7&dl=1')
+    df2 = ('https://www.dropbox.com/scl/fi/ylpmxer1um1epk0fprb7p/EBMATRICULAS.csv?rlkey=zqrdca5iels5kd98aqoms5j6l&st=orepkmms&dl=1')
+    df3 = ('https://www.dropbox.com/scl/fi/4kcacqck96kn96r5rwvb8/EBMATRICULAS20-23.csv?rlkey=w1tbykn95og1infanedn7d7ra&st=vb5tdrq8&dl=1')
+   
     return df1 , df2 , df3
 
 @st.cache_data
 def dict_ies():
-    df_atualizado = pd.read_csv('dados3/MICRODADOS_ED_SUP_IES_2023.CSV', encoding='ISO-8859-1', sep=';')
+    df_atualizado = pd.read_csv('https://www.dropbox.com/scl/fi/es7b7whypvyvwf3l5at5g/MICRODADOS_ED_SUP_IES_2023.CSV?rlkey=hcz6ckp3438ji11ubmslqvpn1&st=8ujt13u8&dl=1', encoding='ISO-8859-1', sep=';')
     nomes_faculdades = df_atualizado.drop_duplicates(subset='NO_IES')
     final_dict = nomes_faculdades.set_index('CO_IES')['NO_IES'].to_dict()
     faculdades_dict = {k: v for k, v in sorted(final_dict.items(), key=lambda item: item[0])}
